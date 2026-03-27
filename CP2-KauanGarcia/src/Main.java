@@ -58,6 +58,7 @@ public class Main {
                 gerenciarPlaylist();
                 break;
             case 6:
+                exibirEstatisticas();
                 break;
             case 0:
                 System.out.println("\n🎵 Obrigado por usar o Sistema de Streaming! Até logo! 🎵\n");
@@ -381,8 +382,7 @@ public class Main {
 
         System.out.println("Duração total: " + formatarDuracao((int) (duracaoTotal)));
         System.out.println("Duração média: " + formatarDuracao((int) (duracaoTotal/musicas.size())));
-        System.out.println("Gênero comum: ");
-    }
+     }
 
     public static String formatarDuracao(int segundos) {
         int minutos = segundos / 60;

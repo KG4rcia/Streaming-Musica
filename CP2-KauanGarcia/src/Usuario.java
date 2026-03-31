@@ -4,6 +4,13 @@ public class Usuario {
     private String nome;
     private ArrayList<Playlist> playlists = new ArrayList<>();
 
+    public Usuario() {
+
+    }
+
+    public Usuario(String nome) {
+        this.nome = nome;
+    }
 
     public void criarPlaylist(String nome) {
         Playlist playlist = new Playlist(nome);
@@ -36,6 +43,10 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
+        if (nome.isEmpty()) {
+            System.out.println("O nome não pode ser vazio.");
+            return;
+        }
         this.nome = nome;
     }
 

@@ -12,9 +12,14 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public void criarPlaylist(String nome) {
+    public Playlist criarPlaylist(String nome) {
+        if (nome.isEmpty()) {
+            System.out.println("Nome inválido.");
+            return null;
+        }
+
         Playlist playlist = new Playlist(nome);
-        System.out.println("✅ Playlist Criada");
+        return playlist;
     }
 
 
@@ -59,6 +64,11 @@ public class Usuario {
     }
 
     public void setPlaylists(ArrayList<Playlist> playlists) {
+        if (playlists.isEmpty()) {
+            System.out.println("A playlist está vazia.");
+            return;
+        }
+
         this.playlists = playlists;
     }
 }

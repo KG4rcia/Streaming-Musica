@@ -1,9 +1,8 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class StreamingMusica {
     static final String[] GENEROS_VALIDOS = {"Pop", "Rock", "Jazz", "Eletrônica", "Hip-Hop", "Clássica"};
     static Scanner scanner = new Scanner(System.in);
     static ArrayList<Musica> musicas = new ArrayList<>();
@@ -206,7 +205,7 @@ public class Main {
         System.out.println("Informe o nome da playlist: ");
 
         nomePlaylist = scanner.nextLine().trim();
-        Playlist playlist = new Playlist(nomePlaylist);
+        Playlist playlist = usuario.criarPlaylist(nomePlaylist);
         usuario.adicionarPlaylist(playlist);
         System.out.println("✅ Playlist criada!");
 

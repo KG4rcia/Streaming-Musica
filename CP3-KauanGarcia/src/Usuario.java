@@ -26,7 +26,8 @@ public class Usuario {
             return;
         }
 
-        Playlist playlist = new Playlist(nome);
+        PlaylistPersonalizada playlistPersonalizada = new PlaylistPersonalizada(nome);
+        playlists.add(playlistPersonalizada);
     }
 
     public void reproduzirMusica(Musica musica) {

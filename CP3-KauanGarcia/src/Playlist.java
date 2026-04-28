@@ -1,11 +1,22 @@
 import java.util.ArrayList;
 
 public class Playlist {
-    private String nome;
-    private ArrayList<Musica> musicas = new ArrayList<>();
+    protected String nome;
+    protected ArrayList<Musica> musicas = new ArrayList<>();
+    protected String descricao;
+
 
     public Playlist(String nome) {
         this.nome = nome.toUpperCase();
+    }
+
+    public void reproduzir() {
+        System.out.println("🎵 Reproduzindo playlist: " + nome);
+
+        for (Musica m : musicas) {
+            System.out.println("  ▶ " + m.getTitulo());
+        }
+
     }
 
     public boolean temMusica() {

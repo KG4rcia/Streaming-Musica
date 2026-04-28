@@ -6,12 +6,24 @@ public class StreamingMusica {
     static final String[] GENEROS_VALIDOS = {"Pop", "Rock", "Jazz", "Eletrônica", "Hip-Hop", "Clássica"};
     static Scanner scanner = new Scanner(System.in);
     static ArrayList<Musica> musicas = new ArrayList<>();
+    static ArrayList<Usuario> usuarios = new ArrayList<>();
+
     static Usuario usuario = criarUsuario();
 
     public static void main(String[] args) {
-        Playlist p1 = new Playlist("Minha primeira Playlist");
-        Playlist p2 = new Playlist("Academia");
-        Playlist p3 = new Playlist("Estudando");
+        PlaylistPersonalizada p1 = new PlaylistPersonalizada("Minha primeira Playlist");
+        PlaylistPersonalizada p2 = new PlaylistPersonalizada("Academia");
+        PlaylistPersonalizada p3 = new PlaylistPersonalizada("Estudando");
+
+        UsuarioPremium usuarioPremium = new UsuarioPremium("KAUAN GARCIA", "GARCIA@GMAIL.COM", "MENSAL");
+        UsuarioPremium usuarioPremium2 = new UsuarioPremium("JOÃO FERNANDES", "JOAO@GMAIL.COM", "FAMILIAR");
+        UsuarioFree usuarioFree = new UsuarioFree("MARCOS AUGUSTO", "MARCOS@GMAIL.COM");
+        UsuarioFree usuarioFree2 = new UsuarioFree("MARIA DA SILVA", "MARIA@GMAIL.COM");
+
+        usuarios.add(usuarioPremium);
+        usuarios.add(usuarioPremium2);
+        usuarios.add(usuarioFree);
+        usuarios.add(usuarioFree2);
 
         Musica m1 = new Musica("Acabou tudo", "Ronaldinho", 120, "Pop");
         Musica m2 = new Musica("Recomeçou", "Rogerio", 300, "Jazz");
@@ -40,76 +52,203 @@ public class StreamingMusica {
         usuario.adicionarPlaylist(p2);
         usuario.adicionarPlaylist(p3);
 
-        int opcao;
-        do {
-            menuGeral();
-            opcao = lerOpcao();
-            processarEscolhaGeral(opcao);
+        if (usuario == null) {
+            System.out.println("\n=== ENCERRANDO... ===");
+        } else {
+            int opcao;
+            do {
+                menuGeral();
+                opcao = lerOpcao();
+                processarEscolhaGeral(opcao);
 
-        } while (opcao != 0);
+            } while (opcao != 0);
+
+        }
+
     }
 
     public static Usuario criarUsuario() {
         int planoContaUsuario;
+        int opcao;
+        int tipoContaUsuario = 0;
 
-        System.out.println("=== BEM-VINDO AO STREAMING ===");
-        System.out.print("Digite seu nome: ");
-        String nomeUsuario = scanner.nextLine();
-        System.out.print("Digite seu email: ");
-        String emailUsuario = scanner.nextLine();
+        while (true) {
+            System.out.println("=== SISTEMA DE STREAMING ===");
+            System.out.println("1. Criar novo usuário");
+            System.out.println("2. Login");
+            System.out.println("3. Listar usuários");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção (0-3): ");
+            opcao = scanner.nextInt();
 
-        System.out.println("Escolha o tipo de conta:");
-        System.out.println("1. Free (Gratuito)");
-        System.out.println("2. Premium (Pago)");
-        System.out.print("Escolha: ");
-        int tipoContaUsuario = scanner.nextInt();
-        scanner.nextLine();
 
-        if (tipoContaUsuario == 2) {
-            System.out.println("Escolha o plano Premium:");
-            System.out.println("1. Mensal (R$ 19,90)");
-            System.out.println("2. Anual (R$ 199,00)");
-            System.out.println("3. Familiar (R$ 29,90)");
+            switch (opcao) {
+                case 1:
+                    scanner.nextLine();
+                    String nomeUsuario = "";
+                    String emailUsuario = "";
 
-            while (true) {
-                System.out.print("Escolha: ");
-                try {
-                    planoContaUsuario = scanner.nextInt();
+                    do {
+                        System.out.print("Digite seu nome: ");
+                        nomeUsuario = scanner.nextLine().trim().toUpperCase();
 
-                    if (planoContaUsuario == 1) {
-                        Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "Mensal");
-                        System.out.println("✅ Conta Premium criada com sucesso!");
+                        if (nomeUsuario.isBlank()) {
+                            System.out.println("- ERRO: O campo \"Nome\" não deve estar vazio.");
+                        }
 
-                        return usuario2;
-                    } else if (planoContaUsuario == 2) {
-                        Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "Anual");
-                        System.out.println("✅ Conta Premium criada com sucesso!");
-                        scanner.nextLine();
+                    } while (nomeUsuario.isBlank());
 
-                        return usuario2;
-                    } else if (planoContaUsuario == 3) {
-                        Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "Familiar");
-                        System.out.println("✅ Conta Premium criada com sucesso!");
-                        scanner.nextLine();
+                    do {
+                        System.out.print("Digite seu email: ");
+                        emailUsuario = scanner.nextLine().trim().toUpperCase();
 
-                        return usuario2;
-                    } else {
-                        throw new IllegalArgumentException("Escolha uma opção válida (1-3).");
+                        if (emailUsuario.isBlank()) {
+                            System.out.println("- ERRO: O campo \"Email\" não deve estar vazio.");
+                        }
+
+                    } while (emailUsuario.isBlank());
+
+
+                    while (true) {
+                        try {
+                            System.out.println("=== ESCOLHA O TIPO DE CONTA ===");
+                            System.out.println("1. Free (Gratuito)");
+                            System.out.println("2. Premium (Pago)");
+                            System.out.print("Escolha: ");
+
+                            tipoContaUsuario = scanner.nextInt();
+                            scanner.nextLine();
+
+                            if (tipoContaUsuario > 3) {
+                                throw new IllegalArgumentException("Selecione uma opção válida (1-2)");
+                            }
+
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("- ERRO: " + e.getMessage());
+                        } catch (InputMismatchException e) {
+                            System.out.println("- ERRO: Somente números.");
+                        }
                     }
 
-                } catch (InputMismatchException e) {
-                    System.out.println("- ERRO: Somente números inteiros.");
+                    if (tipoContaUsuario == 2) {
+                        while (true) {
+                            System.out.println("=== ESCOLHA O PLANO PREMIUM ===");
+                            System.out.println("1. Mensal (R$ 19,90)");
+                            System.out.println("2. Anual (R$ 199,00)");
+                            System.out.println("3. Familiar (R$ 29,90)");
+                            System.out.print("Escolha: ");
+
+                            try {
+                                planoContaUsuario = scanner.nextInt();
+
+                                if (planoContaUsuario == 1) {
+                                    Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "MENSAL");
+                                    System.out.println("✅ Conta Premium criada com sucesso!");
+                                    scanner.nextLine();
+
+                                    usuarios.add(usuario2);
+                                    return usuario2;
+                                } else if (planoContaUsuario == 2) {
+                                    Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "ANUAL");
+                                    System.out.println("✅ Conta Premium criada com sucesso!");
+                                    scanner.nextLine();
+
+                                    usuarios.add(usuario2);
+                                    return usuario2;
+                                } else if (planoContaUsuario == 3) {
+                                    Usuario usuario2 = new UsuarioPremium(nomeUsuario, emailUsuario, "FAMILIAR");
+                                    System.out.println("✅ Conta Premium criada com sucesso!");
+                                    scanner.nextLine();
+
+                                    usuarios.add(usuario2);
+                                    return usuario2;
+                                } else {
+                                    throw new IllegalArgumentException("Escolha uma opção válida (1-3).");
+                                }
+
+                            } catch (InputMismatchException e) {
+                                System.out.println("- ERRO: Somente números inteiros.");
+                                scanner.nextLine();
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("- ERRO: " + e.getMessage());
+                            }
+                        }
+
+                    }
+
+                    Usuario usuario1 = new UsuarioFree(nomeUsuario, emailUsuario);
+                    System.out.println("✅ Conta Free criada com sucesso!");
+                    usuarios.add(usuario1);
+
+                    return usuario1;
+                case 2:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("- ERRO: Não há usuários cadastrados.");
+                        break;
+                    }
+
+                    int idUsuarios = 0;
+                    int posicaoUsuarioLogin = 0;
+
+                    System.out.println("\n=== USUÁRIOS CADASTRADOS ===");
+                    for (Usuario u : usuarios) {
+                        idUsuarios++;
+                        if (u instanceof UsuarioFree) {
+                            System.out.println("ID: " + idUsuarios + " | NOME: " + u.getNome() + " | EMAIL: " + u.getEmail());
+                        } else if (u instanceof UsuarioPremium) {
+                            UsuarioPremium u2 = (UsuarioPremium) u;
+                            System.out.println("ID: " + idUsuarios + " | NOME: " + u2.getNome() + " | PREMIUM: " + u2.getPlano().toUpperCase() + " | EMAIL: " + u2.getEmail());
+                        }
+
+                    }
+
+                    System.out.println("===============================\n");
+
+                    while (true) {
+                        try {
+                            System.out.print("Informe o ID para realizar o login: ");
+                            posicaoUsuarioLogin = scanner.nextInt();
+                            scanner.nextLine();
+
+                            return usuarios.get(posicaoUsuarioLogin-1);
+                        } catch (IndexOutOfBoundsException e) {
+                            System.out.println("- ERRO: Por favor, inserir uma posição válida.");
+                        } catch (InputMismatchException e) {
+                            System.out.println("- ERRO: Somente números, nada de letras.");
+                        }
+
+                    }
+
+                case 3:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("- ERRO: Não há usuários cadastrados.");
+                        break;
+                    }
+
+                    System.out.println("\n=== USUÁRIOS CADASTRADOS ===");
+                    for (Usuario u : usuarios) {
+                        if (u instanceof UsuarioFree) {
+                            System.out.println("NOME: " + u.getNome() + " | EMAIL: " + u.getEmail());
+                        } else if (u instanceof UsuarioPremium) {
+                            UsuarioPremium u2 = (UsuarioPremium) u;
+                            System.out.println("NOME: " + u2.getNome() + " | PREMIUM: " + u2.getPlano().toUpperCase() + " | EMAIL: " + u2.getEmail());
+                        }
+                        System.out.println("===============================\n");
+
+                    }
+
+
+                    break;
+                case 0:
+                    return null;
+                default:
+                    System.out.println("- ERRO: Selecione uma opção válida.");
                     scanner.nextLine();
-                } catch (IllegalArgumentException e) {
-                    System.out.println("- ERRO: " + e.getMessage());
-                }
             }
 
         }
 
-        Usuario usuario1 = new UsuarioFree(nomeUsuario, emailUsuario);
-        System.out.println("✅ Conta Free criada com sucesso!");
-        return usuario1;
     }
 
     public static void menuFree() {
@@ -405,6 +544,9 @@ public class StreamingMusica {
             case 6:
                 exibirEstatisticas();
                 break;
+            case 7:
+                usuario = criarUsuario();
+                break;
             case 0:
                 System.out.println("\n🎵 Obrigado por usar o Sistema de Streaming! Até logo! 🎵\n");
                 break;
@@ -431,6 +573,7 @@ public class StreamingMusica {
         System.out.println("4. Criar playlist");
         System.out.println("5. Gerenciar Playlist & Conta");
         System.out.println("6. Exibir estatísticas");
+        System.out.println("7. Voltar");
         System.out.println("0. Sair");
         System.out.println("-".repeat(20));
         System.out.print("Escolha uma opção: ");
@@ -543,16 +686,149 @@ public class StreamingMusica {
             return;
         }
 
+        int escolhaPlaylist;
+
         if (usuario instanceof UsuarioPremium) {
-            UsuarioPremium usuarioPremium = (UsuarioPremium) usuario;
-            System.out.print("- Informe o nome da playlist: ");
-            String nomePlaylist = scanner.nextLine();
-            usuarioPremium.criarPlaylist(nomePlaylist);
+
+            while (true) {
+                try {
+                    System.out.println("=".repeat(20));
+                    System.out.println("1. PlayList Personalizada.");
+                    System.out.println("2. PlayList Automatica.");
+                    System.out.print("- Sua escolha: ");
+                    escolhaPlaylist = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (escolhaPlaylist > 2) {
+                        throw new IllegalArgumentException("\n- ERRO: Escolha uma opção válida.\n");
+                    }
+
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("\n- ERRO: Somente números, nada de letras.\n");
+                    scanner.nextLine();
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            if (escolhaPlaylist == 1) {
+                System.out.println("=".repeat(20));
+                UsuarioPremium usuarioPremium = (UsuarioPremium) usuario;
+                System.out.print("- Informe o nome da playlist: ");
+                String nomePlaylist = scanner.nextLine();
+                usuarioPremium.criarPlaylist(nomePlaylist);
+            } else if (escolhaPlaylist == 2) {
+                System.out.println("=".repeat(20));
+                UsuarioPremium usuarioPremium = (UsuarioPremium) usuario;
+                int playlistAutomatica;
+
+                while (true) {
+                    try {
+                        System.out.println("=== PLAYLISTS AUTOMÁTICAS ===");
+                        System.out.println("1. Top 10 mais tocadas...");
+                        System.out.println("2. Recomendadas para você...");
+                        System.out.println("3. Adicionadas recentemnte...");
+                        System.out.println("Sua escolha: ");
+                        playlistAutomatica = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (playlistAutomatica > 3 || playlistAutomatica < 3) {
+                            throw new IllegalArgumentException("Informe uma opção válida, ela deve estar entre 1 e 3.");
+                        }
+
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("- ERRO: Somente números, nada de letras.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("- ERRO: " + e.getMessage());
+                    }
+
+                }
+
+                // Montar a lógica a partir daqui
+
+
+                System.out.print("- Informe o nome da playlist: ");
+                String nomePlaylist = scanner.nextLine();
+
+                System.out.println("-  ");
+
+
+
+                System.out.println("- INFORME UM CRITÉRIO PARA MONTARMOS A PLAYLIST AUTOMÁTICA. ");
+                System.out.println("1. ");
+                System.out.print("- Informe o critério: ");
+                String criterio = scanner.nextLine();
+
+
+            }
+
         } else if (usuario instanceof UsuarioFree) {
-            UsuarioFree usuarioFree = (UsuarioFree) usuario;
-            System.out.print("- Informe o nome da playlist: ");
-            String nomePlaylist = scanner.nextLine();
-            usuarioFree.criarPlaylist(nomePlaylist);
+
+            while (true) {
+                try {
+                    System.out.println("=".repeat(20));
+                    System.out.println("1. PlayList Personalizada.");
+                    System.out.println("2. PlayList Automatica.");
+                    System.out.print("- Sua escolha: ");
+                    escolhaPlaylist = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (escolhaPlaylist > 2) {
+                        throw new IllegalArgumentException("- ERRO: Escolha uma opção válida.");
+                    }
+
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("- ERRO: Somente números, nada de letras.");
+                    scanner.nextLine();
+                } catch (IllegalArgumentException e) {
+                    System.out.println("- ERRO: " + e.getMessage());
+                    scanner.nextLine();
+                }
+            }
+
+            if (escolhaPlaylist == 1) {
+                System.out.println("=".repeat(20));
+                UsuarioFree usuarioFree = (UsuarioFree) usuario;
+                System.out.print("- Informe o nome da playlist: ");
+                String nomePlaylist = scanner.nextLine();
+                usuarioFree.criarPlaylist(nomePlaylist);
+            } else if (escolhaPlaylist == 2) {
+                System.out.println("=".repeat(20));
+                UsuarioFree usuarioFree = (UsuarioFree) usuario;
+                int playlistAutomatica;
+
+                while (true) {
+                    try {
+                        System.out.println("=== PLAYLISTS AUTOMÁTICAS ===");
+                        System.out.println("1. Top 10 mais tocadas...");
+                        System.out.println("2. Recomendadas para você...");
+                        System.out.println("3. Adicionadas recentemnte...");
+                        System.out.println("Sua escolha: ");
+                        playlistAutomatica = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (playlistAutomatica > 3 || playlistAutomatica < 3) {
+                            throw new IllegalArgumentException("Informe uma opção válida, ela deve estar entre 1 e 3.");
+                        }
+
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("- ERRO: Somente números, nada de letras.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("- ERRO: " + e.getMessage());
+                    }
+
+                }
+
+                // Montar a lógica a partir daqui
+
+
+
+            }
+
         }
 
     }
@@ -680,16 +956,44 @@ public class StreamingMusica {
         System.out.println("-".repeat(20));
         System.out.println("\n--- ESTATÍSTICAS DO SISTEMA ---");
         double duracaoTotal = 0;
+        int usuariosFree = 0;
+        int usuariosPremium = 0;
+        int reproducaoTotal = 0;
+        int reproducaoPremium = 0;
+        int anunciosExibidos = 0;
+        int reproducaoFree = 0;
 
-
-        System.out.println("Total de músicas: " + musicas.size());
-
-        for (int i = 0; i < musicas.size(); i++) {
-            duracaoTotal += musicas.get(i).getDuracaoSegundos();
+        System.out.println("Total de usuários: " + usuarios.size());
+        for (Usuario usuario1 : usuarios) {
+            if (usuario1 instanceof UsuarioFree) {
+                usuariosFree++;
+                reproducaoTotal += usuario1.getHistoricoReproducao().size();
+                reproducaoFree += usuario1.getHistoricoReproducao().size();
+                anunciosExibidos += ((UsuarioFree) usuario1).getAnuncios();
+            } else {
+                usuariosPremium++;
+                reproducaoTotal += usuario1.getHistoricoReproducao().size();
+                reproducaoPremium += usuario1.getHistoricoReproducao().size();
+            }
         }
 
-        System.out.println("Duração total: " + formatarDuracao((int) (duracaoTotal)));
-        System.out.println("Duração média: " + formatarDuracao((int) (duracaoTotal/musicas.size())));
+        System.out.println("- Free: " + usuariosFree + " usuários");
+        System.out.println("- Premium: " + usuariosPremium + " usuários");
+
+
+
+        System.out.println("\nReproduções Totais: " + reproducaoTotal);
+        System.out.printf("- Free: %d (%.2f%%)%n", reproducaoFree, ((double) reproducaoFree * 100.0) / reproducaoTotal);
+        System.out.printf("- Premium: %d (%.2f%%)%n", reproducaoPremium, ((double) reproducaoPremium * 100.0) / reproducaoTotal);
+        System.out.println("\nAnúncios exibidos: " + anunciosExibidos);
+
+//        System.out.println("Total de músicas: " + musicas.size());
+//        for (int i = 0; i < musicas.size(); i++) {
+//            duracaoTotal += musicas.get(i).getDuracaoSegundos();
+//        }
+//
+//        System.out.println("Duração total: " + formatarDuracao((int) (duracaoTotal)));
+//        System.out.println("Duração média: " + formatarDuracao((int) (duracaoTotal/musicas.size())));
      }
 
     public static String formatarDuracao(int segundos) {

@@ -4,6 +4,7 @@ public class Musica {
     private double duracaoSegundos;
     private String genero;
     private final String[] GENEROS_VALIDOS = {"Pop", "Rock", "Jazz", "Eletrônica", "Hip-Hop", "Clássica"};
+    private int tocadas;
 
 
     public Musica(String titulo, String artista, double duracaoSegundos, String genero) {
@@ -33,6 +34,10 @@ public class Musica {
             return true;
         }
         return false;
+    }
+
+    public void aumentarContadorMusica() {
+        tocadas++;
     }
 
     // Getters e Setters
@@ -83,5 +88,13 @@ public class Musica {
         System.out.println("-".repeat(20));
         System.out.println("Não é um gêneroe valido.");
         return;
+    }
+
+    public int getTocadas() {
+        return tocadas;
+    }
+
+    public void setTocadas(int tocadas) {
+        this.tocadas = tocadas;
     }
 }

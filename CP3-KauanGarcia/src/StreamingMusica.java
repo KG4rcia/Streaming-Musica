@@ -32,6 +32,13 @@ public class StreamingMusica {
         Musica m5 = new Musica("Estrela Cadente", "Maria", 250, "Pop");
         Musica m6 = new Musica("Little Dark Age", "Trupe", 110, "Rock");
 
+        m1.setTocadas(10);
+        m2.setTocadas(50);
+        m3.setTocadas(32);
+        m4.setTocadas(10);
+        m5.setTocadas(67);
+        m6.setTocadas(46);
+
         musicas.add(m1);
         musicas.add(m2);
         musicas.add(m3);
@@ -687,6 +694,7 @@ public class StreamingMusica {
         }
 
         int escolhaPlaylist;
+        String nomePlaylist;
 
         if (usuario instanceof UsuarioPremium) {
 
@@ -716,8 +724,9 @@ public class StreamingMusica {
                 System.out.println("=".repeat(20));
                 UsuarioPremium usuarioPremium = (UsuarioPremium) usuario;
                 System.out.print("- Informe o nome da playlist: ");
-                String nomePlaylist = scanner.nextLine();
+                nomePlaylist = scanner.nextLine();
                 usuarioPremium.criarPlaylist(nomePlaylist);
+
             } else if (escolhaPlaylist == 2) {
                 System.out.println("=".repeat(20));
                 UsuarioPremium usuarioPremium = (UsuarioPremium) usuario;
@@ -726,14 +735,14 @@ public class StreamingMusica {
                 while (true) {
                     try {
                         System.out.println("=== PLAYLISTS AUTOMÁTICAS ===");
-                        System.out.println("1. Top 10 mais tocadas...");
+                        System.out.println("1. Top 03 mais tocadas...");
                         System.out.println("2. Recomendadas para você...");
-                        System.out.println("3. Adicionadas recentemnte...");
-                        System.out.println("Sua escolha: ");
+                        System.out.println("3. Adicionadas recentemente...");
+                        System.out.print("Sua escolha: ");
                         playlistAutomatica = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (playlistAutomatica > 3 || playlistAutomatica < 3) {
+                        if (playlistAutomatica > 3 || playlistAutomatica < 1) {
                             throw new IllegalArgumentException("Informe uma opção válida, ela deve estar entre 1 e 3.");
                         }
 
@@ -746,23 +755,15 @@ public class StreamingMusica {
 
                 }
 
-                // Montar a lógica a partir daqui
+                if (playlistAutomatica == 1) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
 
-
-                System.out.print("- Informe o nome da playlist: ");
-                String nomePlaylist = scanner.nextLine();
-
-                System.out.println("-  ");
-
-
-
-                System.out.println("- INFORME UM CRITÉRIO PARA MONTARMOS A PLAYLIST AUTOMÁTICA. ");
-                System.out.println("1. ");
-                System.out.print("- Informe o critério: ");
-                String criterio = scanner.nextLine();
-
-
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.topDezMusicas(musicas));
+                }
             }
+
 
         } else if (usuario instanceof UsuarioFree) {
 
@@ -793,8 +794,9 @@ public class StreamingMusica {
                 System.out.println("=".repeat(20));
                 UsuarioFree usuarioFree = (UsuarioFree) usuario;
                 System.out.print("- Informe o nome da playlist: ");
-                String nomePlaylist = scanner.nextLine();
+                nomePlaylist = scanner.nextLine();
                 usuarioFree.criarPlaylist(nomePlaylist);
+
             } else if (escolhaPlaylist == 2) {
                 System.out.println("=".repeat(20));
                 UsuarioFree usuarioFree = (UsuarioFree) usuario;
@@ -803,7 +805,7 @@ public class StreamingMusica {
                 while (true) {
                     try {
                         System.out.println("=== PLAYLISTS AUTOMÁTICAS ===");
-                        System.out.println("1. Top 10 mais tocadas...");
+                        System.out.println("1. Top 03 mais tocadas...");
                         System.out.println("2. Recomendadas para você...");
                         System.out.println("3. Adicionadas recentemnte...");
                         System.out.println("Sua escolha: ");
@@ -820,10 +822,15 @@ public class StreamingMusica {
                     } catch (IllegalArgumentException e) {
                         System.out.println("- ERRO: " + e.getMessage());
                     }
-
                 }
 
-                // Montar a lógica a partir daqui
+                if (playlistAutomatica == 1) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
+
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.topDezMusicas(musicas));
+                }
 
 
 

@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Playlist {
     protected String nome;
-    protected ArrayList<Musica> musicas = new ArrayList<>();
+    protected List<Musica> musicas = new ArrayList<>();
     protected String descricao;
 
 
@@ -70,11 +71,11 @@ public class Playlist {
         this.nome = nome;
     }
 
-    public ArrayList<Musica> getMusicas() {
+    public List<Musica> getMusicas() {
         return musicas;
     }
 
-    public void setMusicas(ArrayList<Musica> musicas) {
+    public void setMusicas(List<Musica> musicas) {
         if (musicas.isEmpty()) {
             System.out.println("A lista está vazia, não há como colocar ela.");
             return;

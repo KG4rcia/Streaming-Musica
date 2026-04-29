@@ -33,6 +33,7 @@ public class Usuario {
     public void reproduzirMusica(Musica musica) {
         System.out.println("🎵 Reproduzindo: " + musica.getTitulo());
         historicoReproducao.add(musica);
+        musica.aumentarContadorMusica();
     }
 
     public void exibirHistorico() {

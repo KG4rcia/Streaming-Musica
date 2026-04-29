@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class PlaylistAutomatica extends Playlist {
     private String criterio; // "top", "recomendadas", "recentes"
@@ -6,6 +6,32 @@ public class PlaylistAutomatica extends Playlist {
     public PlaylistAutomatica(String nome, String criterio) {
         super(nome);
         this.criterio = criterio;
+    }
+
+    public PlaylistAutomatica(String nome) {
+        super(nome);
+    }
+
+    public List<Musica> topDezMusicas(ArrayList<Musica> musicas) {
+//        Collections.sort(musicas);
+
+        List<Musica> topDez = new ArrayList<>();
+
+        Collections.sort(musicas, Comparator.comparingInt(Musica::getTocadas).reversed());
+
+        System.out.println("\n=== TOP TRÊS MÚSICAS ===");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("POSIÇÃO: " + (i+1) +
+                    "° | MÚSICA: " + musicas.get(i).getTitulo() +
+                    " | VEZES TOCADAS " + musicas.get(i).getTocadas() +
+                    " | ARTISTA: " + musicas.get(i).getArtista());
+
+            topDez.add(musicas.get(i));
+        }
+
+        System.out.println("=== MÚSICAS ADICIONADAS ===");
+        System.out.println("=======================\n");
+        return topDez;
     }
 
     @Override
@@ -24,6 +50,10 @@ public class PlaylistAutomatica extends Playlist {
             // Adicionar músicas recomendadas
         }
     }
+
+
+
+
 
 
 }

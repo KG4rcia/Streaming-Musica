@@ -29,6 +29,7 @@ public class Playlist {
 
     public void adicionarMusica(Musica musica) {
         musicas.add(musica);
+        musica.addPlaylist();
         System.out.println("--- MUSICA ADICIONADA ---");
     }
 

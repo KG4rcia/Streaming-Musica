@@ -7,10 +7,9 @@ public class StreamingMusica {
     static Scanner scanner = new Scanner(System.in);
     static ArrayList<Musica> musicas = new ArrayList<>();
     static ArrayList<Usuario> usuarios = new ArrayList<>();
+    static Usuario usuario;
 
-    static Usuario usuario = criarUsuario();
-
-    public static void main(String[] args) {
+    public static void testes() {
         PlaylistPersonalizada p1 = new PlaylistPersonalizada("Minha primeira Playlist");
         PlaylistPersonalizada p2 = new PlaylistPersonalizada("Academia");
         PlaylistPersonalizada p3 = new PlaylistPersonalizada("Estudando");
@@ -47,17 +46,31 @@ public class StreamingMusica {
         musicas.add(m6);
 
         p1.adicionarMusica(m1); // acabou tudo
-
         p2.adicionarMusica(m2); // recomeçou
-        p2.adicionarMusica(m3); //nova
-
+        p2.adicionarMusica(m3); // nova
         p3.adicionarMusica(m4); // sol e lua
         p3.adicionarMusica(m5); // estrela cadente
-        p3.adicionarMusica(m6); // little darka ge
+        p3.adicionarMusica(m6); // little dark age
 
-        usuario.adicionarPlaylist(p1);
-        usuario.adicionarPlaylist(p2);
-        usuario.adicionarPlaylist(p3);
+        p1.adicionarMusica(m6); // little dark age
+        p2.adicionarMusica(m6); // little dark age
+        p3.adicionarMusica(m6); // little dark age
+        p2.adicionarMusica(m4); // Sol e Lua
+        p2.adicionarMusica(m4); // Sol e Lua
+        p1.adicionarMusica(m4); // Sol e Lua
+
+        p2.adicionarMusica(m5); // Estrela Cadente
+        p2.adicionarMusica(m5); // Estrela Cadente
+
+//        usuario.adicionarPlaylist(p1);
+//        usuario.adicionarPlaylist(p2);
+//        usuario.adicionarPlaylist(p3);
+    }
+
+    public static void main(String[] args) {
+//        testes();
+
+        usuario = criarUsuario();
 
         if (usuario == null) {
             System.out.println("\n=== ENCERRANDO... ===");
@@ -202,10 +215,10 @@ public class StreamingMusica {
                     for (Usuario u : usuarios) {
                         idUsuarios++;
                         if (u instanceof UsuarioFree) {
-                            System.out.println("ID: " + idUsuarios + " | NOME: " + u.getNome() + " | EMAIL: " + u.getEmail());
+                            System.out.println("ID: " + idUsuarios + " | NOME: " + u.getNome() + " | PLANO: GRATUITO" + " | EMAIL: " + u.getEmail());
                         } else if (u instanceof UsuarioPremium) {
                             UsuarioPremium u2 = (UsuarioPremium) u;
-                            System.out.println("ID: " + idUsuarios + " | NOME: " + u2.getNome() + " | PREMIUM: " + u2.getPlano().toUpperCase() + " | EMAIL: " + u2.getEmail());
+                            System.out.println("ID: " + idUsuarios + " | NOME: " + u2.getNome() + " | PLANO: PREMIUM " + u2.getPlano().toUpperCase() + " | EMAIL: " + u2.getEmail());
                         }
 
                     }
@@ -236,14 +249,15 @@ public class StreamingMusica {
                     System.out.println("\n=== USUÁRIOS CADASTRADOS ===");
                     for (Usuario u : usuarios) {
                         if (u instanceof UsuarioFree) {
-                            System.out.println("NOME: " + u.getNome() + " | EMAIL: " + u.getEmail());
+                            System.out.println("NOME: " + u.getNome() + " | PLANO: GRATUITO" + " | EMAIL: " + u.getEmail());
                         } else if (u instanceof UsuarioPremium) {
                             UsuarioPremium u2 = (UsuarioPremium) u;
-                            System.out.println("NOME: " + u2.getNome() + " | PREMIUM: " + u2.getPlano().toUpperCase() + " | EMAIL: " + u2.getEmail());
+                            System.out.println("NOME: " + u2.getNome() +
+                                    " | PLANO: PREMIUM " + u2.getPlano().toUpperCase() +
+                                    " | EMAIL: " + u2.getEmail());
                         }
-                        System.out.println("===============================\n");
-
                     }
+                    System.out.println("===============================\n");
 
 
                     break;
@@ -760,8 +774,26 @@ public class StreamingMusica {
                     nomePlaylist = scanner.nextLine();
 
                     PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
-                    playlistAutomatica1.setMusicas(playlistAutomatica1.topDezMusicas(musicas));
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "tops"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
+
+                } else if (playlistAutomatica == 2) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
+
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "recomendadas"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
+
+                } else if (playlistAutomatica == 3) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
+
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "recentes"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
                 }
+
             }
 
 
@@ -829,10 +861,25 @@ public class StreamingMusica {
                     nomePlaylist = scanner.nextLine();
 
                     PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
-                    playlistAutomatica1.setMusicas(playlistAutomatica1.topDezMusicas(musicas));
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "tops"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
+
+                } else if (playlistAutomatica == 2) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
+
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "recomendadas"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
+
+                } else if (playlistAutomatica == 3) {
+                    System.out.print("- Informe o nome da playlist: ");
+                    nomePlaylist = scanner.nextLine();
+
+                    PlaylistAutomatica playlistAutomatica1 = new PlaylistAutomatica(nomePlaylist);
+                    playlistAutomatica1.setMusicas(playlistAutomatica1.fazerPlaylist(musicas, "recentes"));
+                    usuario.adicionarPlaylist(playlistAutomatica1);
                 }
-
-
 
             }
 

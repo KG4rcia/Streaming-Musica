@@ -5,6 +5,7 @@ public class Musica {
     private String genero;
     private final String[] GENEROS_VALIDOS = {"Pop", "Rock", "Jazz", "Eletrônica", "Hip-Hop", "Clássica"};
     private int tocadas;
+    private int totalPlaylist;
 
 
     public Musica(String titulo, String artista, double duracaoSegundos, String genero) {
@@ -40,7 +41,19 @@ public class Musica {
         tocadas++;
     }
 
+    public void addPlaylist() {
+        totalPlaylist++;
+    }
+
     // Getters e Setters
+    public int getTotalPlaylist() {
+        return totalPlaylist;
+    }
+
+    public void setTotalPlaylist(int totalPlaylist) {
+        this.totalPlaylist = totalPlaylist;
+    }
+
     public String getTitulo() {
         return titulo;
     }

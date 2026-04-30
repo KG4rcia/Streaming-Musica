@@ -12,26 +12,58 @@ public class PlaylistAutomatica extends Playlist {
         super(nome);
     }
 
-    public List<Musica> topDezMusicas(ArrayList<Musica> musicas) {
-//        Collections.sort(musicas);
+    public List<Musica> fazerPlaylist(ArrayList<Musica> musicas, String criterio) {
 
-        List<Musica> topDez = new ArrayList<>();
+        if (criterio.toLowerCase().equals("tops")) {
 
-        Collections.sort(musicas, Comparator.comparingInt(Musica::getTocadas).reversed());
+            List<Musica> topDez = new ArrayList<>();
+            Collections.sort(musicas, Comparator.comparingInt(Musica::getTocadas).reversed());
 
-        System.out.println("\n=== TOP TRÊS MÚSICAS ===");
-        for (int i = 0; i < 3; i++) {
-            System.out.println("POSIÇÃO: " + (i+1) +
-                    "° | MÚSICA: " + musicas.get(i).getTitulo() +
-                    " | VEZES TOCADAS " + musicas.get(i).getTocadas() +
-                    " | ARTISTA: " + musicas.get(i).getArtista());
+            System.out.println("\n=== TOP TRÊS MÚSICAS ===");
+            for (int i = 0; i < 3; i++) {
+                System.out.println("POSIÇÃO: " + (i+1) +
+                        "° | MÚSICA: " + musicas.get(i).getTitulo() +
+                        " | VEZES TOCADAS " + musicas.get(i).getTocadas() +
+                        " | ARTISTA: " + musicas.get(i).getArtista());
 
-            topDez.add(musicas.get(i));
+                topDez.add(musicas.get(i));
+            }
+
+            System.out.println("=== MÚSICAS ADICIONADAS ===");
+            System.out.println("=======================\n");
+            return topDez;
+        } else if (criterio.toLowerCase().equals("recomendadas")) {
+
+            List<Musica> recomendadasPlaylist = new ArrayList<>();
+            Collections.sort(musicas, Comparator.comparingInt(Musica::getTotalPlaylist).reversed());
+
+            System.out.println("\n=== MÚSICAS RECOMENDADAS ===");
+            for (int i = 0; i < 3; i++) {
+                System.out.println("POSIÇÃO: " + (i+1) +
+                        "° | MÚSICA: " + musicas.get(i).getTitulo() +
+                        " | POPULARIDADE EM PLAYLIST " + musicas.get(i).getTotalPlaylist() +
+                        " | ARTISTA: " + musicas.get(i).getArtista());
+                recomendadasPlaylist.add(musicas.get(i));
+            }
+            System.out.println("=== MÚSICAS ADICIONADAS ===");
+            System.out.println("=======================\n");
+            return recomendadasPlaylist;
+        } else if (criterio.equals("recentes")) {
+            List<Musica> recentes = new ArrayList<>();
+            Collections.reverse(musicas);
+
+            for (int i = 0; i < 3; i++) {
+                System.out.println("POSIÇÃO: " + (i+1) +
+                        "° | MÚSICA: " + musicas.get(i).getTitulo() +
+                        " | ARTISTA: " + musicas.get(i).getArtista());
+                recentes.add(musicas.get(i));
+            }
+            System.out.println("=== MÚSICAS ADICIONADAS ===");
+            System.out.println("=======================\n");
+            return recentes;
         }
 
-        System.out.println("=== MÚSICAS ADICIONADAS ===");
-        System.out.println("=======================\n");
-        return topDez;
+        return null;
     }
 
     @Override

@@ -9,66 +9,21 @@ public class StreamingMusica {
     static ArrayList<Usuario> usuarios = new ArrayList<>();
     static Usuario usuario;
 
-    public static void testes() {
-        PlaylistPersonalizada p1 = new PlaylistPersonalizada("Minha primeira Playlist");
-        PlaylistPersonalizada p2 = new PlaylistPersonalizada("Academia");
-        PlaylistPersonalizada p3 = new PlaylistPersonalizada("Estudando");
+    public static boolean emailJaExiste(String email) {
+        if (usuarios.isEmpty()) {
+            return false;
+        }
 
-        UsuarioPremium usuarioPremium = new UsuarioPremium("KAUAN GARCIA", "GARCIA@GMAIL.COM", "MENSAL");
-        UsuarioPremium usuarioPremium2 = new UsuarioPremium("JOÃO FERNANDES", "JOAO@GMAIL.COM", "FAMILIAR");
-        UsuarioFree usuarioFree = new UsuarioFree("MARCOS AUGUSTO", "MARCOS@GMAIL.COM");
-        UsuarioFree usuarioFree2 = new UsuarioFree("MARIA DA SILVA", "MARIA@GMAIL.COM");
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equals(email)) {
+                return true;
+            }
+        }
 
-        usuarios.add(usuarioPremium);
-        usuarios.add(usuarioPremium2);
-        usuarios.add(usuarioFree);
-        usuarios.add(usuarioFree2);
-
-        Musica m1 = new Musica("Acabou tudo", "Ronaldinho", 120, "Pop");
-        Musica m2 = new Musica("Recomeçou", "Rogerio", 300, "Jazz");
-        Musica m3 = new Musica("Nova", "Roberto", 180, "Rock");
-        Musica m4 = new Musica("Sol e Lua", "Fernanda", 160, "Rock");
-        Musica m5 = new Musica("Estrela Cadente", "Maria", 250, "Pop");
-        Musica m6 = new Musica("Little Dark Age", "Trupe", 110, "Rock");
-
-        m1.setTocadas(10);
-        m2.setTocadas(50);
-        m3.setTocadas(32);
-        m4.setTocadas(10);
-        m5.setTocadas(67);
-        m6.setTocadas(46);
-
-        musicas.add(m1);
-        musicas.add(m2);
-        musicas.add(m3);
-        musicas.add(m4);
-        musicas.add(m5);
-        musicas.add(m6);
-
-        p1.adicionarMusica(m1); // acabou tudo
-        p2.adicionarMusica(m2); // recomeçou
-        p2.adicionarMusica(m3); // nova
-        p3.adicionarMusica(m4); // sol e lua
-        p3.adicionarMusica(m5); // estrela cadente
-        p3.adicionarMusica(m6); // little dark age
-
-        p1.adicionarMusica(m6); // little dark age
-        p2.adicionarMusica(m6); // little dark age
-        p3.adicionarMusica(m6); // little dark age
-        p2.adicionarMusica(m4); // Sol e Lua
-        p2.adicionarMusica(m4); // Sol e Lua
-        p1.adicionarMusica(m4); // Sol e Lua
-
-        p2.adicionarMusica(m5); // Estrela Cadente
-        p2.adicionarMusica(m5); // Estrela Cadente
-
-//        usuario.adicionarPlaylist(p1);
-//        usuario.adicionarPlaylist(p2);
-//        usuario.adicionarPlaylist(p3);
+        return false;
     }
 
     public static void main(String[] args) {
-//        testes();
 
         usuario = criarUsuario();
 
@@ -126,7 +81,13 @@ public class StreamingMusica {
                             System.out.println("- ERRO: O campo \"Email\" não deve estar vazio.");
                         }
 
-                    } while (emailUsuario.isBlank());
+                        if (emailJaExiste(emailUsuario)) {
+                            System.out.println("- ERRO: Esse Email já está vinculado a algum usuário. Tente novamente com outro email.");
+                        } else {
+                            break;
+                        }
+
+                    } while (true);
 
 
                     while (true) {

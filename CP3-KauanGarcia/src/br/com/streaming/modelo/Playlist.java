@@ -1,7 +1,11 @@
+package br.com.streaming.modelo;
+
+import br.com.streaming.servico.Reproduzivel;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist {
+public class Playlist implements Reproduzivel {
     protected String nome;
     protected List<Musica> musicas = new ArrayList<>();
     protected String descricao;
@@ -11,6 +15,7 @@ public class Playlist {
         this.nome = nome.toUpperCase();
     }
 
+    @Override
     public void reproduzir() {
         System.out.println("🎵 Reproduzindo playlist: " + nome);
 
@@ -47,23 +52,24 @@ public class Playlist {
         }
     }
 
-    public double getDuracaoTotal() {
-        if (musicas.isEmpty()) {
-            return 0;
-        }
-
-        double total = 0;
-        for (Musica musica : musicas) {
-            total += musica.getDuracaoSegundos();
-        }
-        return total;
-    }
-
     public int getQuantidadeMusicas() {
         return musicas.size();
     }
 
     // Getters e Setters
+    @Override
+    public int getDuracaoTotal() {
+        if (musicas.isEmpty()) {
+            return 0;
+        }
+
+        int total = 0;
+        for (Musica musica : musicas) {
+            total += musica.getDuracaoTotal();
+        }
+        return total;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -77,11 +83,7 @@ public class Playlist {
     }
 
     public void setMusicas(List<Musica> musicas) {
-        if (musicas.isEmpty()) {
-            System.out.println("A lista está vazia, não há como colocar ela.");
-            return;
-        }
-
         this.musicas = musicas;
     }
+
 }

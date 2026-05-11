@@ -1,6 +1,10 @@
+package br.com.streaming.modelo;
+
+import br.com.streaming.servico.Baixavel;
+
 import java.util.ArrayList;
 
-public class UsuarioPremium extends Usuario {
+public class UsuarioPremium extends Usuario implements Baixavel {
     private String plano; // Mensal, Anual, Familiar
     private ArrayList<Musica> musicasBaixadas;
 
@@ -21,6 +25,7 @@ public class UsuarioPremium extends Usuario {
         musica.aumentarContadorMusica();
     }
 
+    @Override
     public void baixarMusica(Musica musica) {
         if (!musicasBaixadas.contains(musica)) {
             musicasBaixadas.add(musica);
@@ -28,6 +33,36 @@ public class UsuarioPremium extends Usuario {
         } else {
             System.out.println("ℹ️ Música já está baixada!");
         }
+    }
+
+    @Override
+    public void removerDownload(Musica musica) {
+        musicasBaixadas.remove(musica);
+    }
+
+    @Override
+    public boolean estaBaixada(Musica musica) {
+        if (playlists.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < playlists.size(); i++) {
+
+            for (int j = 0; j < playlists.get(i).getMusicas().size(); i++) {
+
+                if (playlists.get(i).getMusicas().get(j) == musica) {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int getTamanhoBaixados() {
+        return musicasBaixadas.size();
     }
 
     public void listarMusicasBaixadas() {

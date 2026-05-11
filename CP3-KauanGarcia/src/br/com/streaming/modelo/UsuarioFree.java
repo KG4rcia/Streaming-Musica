@@ -1,4 +1,6 @@
-public class UsuarioFree extends Usuario{
+package br.com.streaming.modelo;
+
+public class UsuarioFree extends Usuario {
     private static final int MAX_PLAYLISTS = 3;
     private int contadorReproducoes;
     private int anuncios = 0;
@@ -28,7 +30,7 @@ public class UsuarioFree extends Usuario{
 
         PlaylistPersonalizada playlist = new PlaylistPersonalizada(nome);
         playlists.add(playlist);
-        System.out.println("✅ Playlist criada!");
+        System.out.println("✅ br.com.streaming.modelo.Playlist criada!");
     }
 
     private void exibirAnuncio() {

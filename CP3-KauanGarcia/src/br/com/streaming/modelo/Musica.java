@@ -1,4 +1,8 @@
-public class Musica {
+package br.com.streaming.modelo;
+
+import br.com.streaming.servico.Reproduzivel;
+
+public class Musica implements Reproduzivel {
     private String titulo;
     private String artista;
     private double duracaoSegundos;
@@ -45,6 +49,16 @@ public class Musica {
         totalPlaylist++;
     }
 
+    @Override
+    public void reproduzir() {
+
+    }
+
+    @Override
+    public int getDuracaoTotal() {
+        return ((int) duracaoSegundos);
+    }
+
     // Getters e Setters
     public int getTotalPlaylist() {
         return totalPlaylist;
@@ -79,10 +93,6 @@ public class Musica {
         this.artista = artista;
     }
 
-    public double getDuracaoSegundos() {
-        return duracaoSegundos;
-    }
-
     public void setDuracaoSegundos(double duracaoSegundos) {
         this.duracaoSegundos = duracaoSegundos;
     }
@@ -110,4 +120,5 @@ public class Musica {
     public void setTocadas(int tocadas) {
         this.tocadas = tocadas;
     }
+
 }

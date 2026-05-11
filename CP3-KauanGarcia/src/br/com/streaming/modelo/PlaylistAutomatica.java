@@ -1,3 +1,5 @@
+package br.com.streaming.modelo;
+
 import java.util.*;
 
 public class PlaylistAutomatica extends Playlist {
@@ -12,10 +14,14 @@ public class PlaylistAutomatica extends Playlist {
         super(nome);
     }
 
-    public List<Musica> fazerPlaylist(ArrayList<Musica> musicas, String criterio) {
+    public List<Musica> fazerPlaylist(List<Musica> musicas, String criterio) {
+
+        if (musicas.size() < 3) {
+            System.out.println("- ERRO: Não há músicas o suficientes cadastradas.");
+            return null;
+        }
 
         if (criterio.toLowerCase().equals("tops")) {
-
             List<Musica> topDez = new ArrayList<>();
             Collections.sort(musicas, Comparator.comparingInt(Musica::getTocadas).reversed());
 
@@ -68,7 +74,7 @@ public class PlaylistAutomatica extends Playlist {
 
     @Override
     public void reproduzir() {
-        System.out.println("🤖 Playlist Automática: " + nome);
+        System.out.println("🤖 br.com.streaming.modelo.Playlist Automática: " + nome);
         System.out.println("📊 Critério: " + criterio);
         super.reproduzir();
     }
